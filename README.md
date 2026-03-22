@@ -112,18 +112,7 @@ CLAUDE.md를 열고 **당신의 책에 맞게** 아래 항목을 바꿉니다.
 
 **중요**: "최종 산출물 구조" 섹션은 현재 노트북LM 책의 7부 20개 활용법 목차가 상세히 기술되어 있습니다. 이 부분을 **당신의 책 목차로 통째로 교체**해야 합니다. 부분 수정이 아니라 전체 교체입니다.
 
-### 3. 스크립트 수정
-
-`output/generate_docx.py`와 `output/generate_images.py`는 현재 이 책(노트북LM)에 맞춰 작성되어 있습니다.
-
-| 파일 | 수정할 부분 |
-|------|------------|
-| `generate_docx.py` | `BASE_DIR` 경로, `OUTPUT_PATH` 파일명, 표지 제목/저자명, 환율 등 |
-| `generate_images.py` | 다이어그램 내용 전체 (당신의 책 내용에 맞는 다이어그램으로 교체) |
-
-스크립트를 처음부터 다시 만들 필요는 없습니다. CLAUDE.md에 퍼블리싱 규칙(판형, 폰트, 색상, 서식)이 정의되어 있으므로, Claude Code에게 "12단계 퍼블리싱을 수행해줘"라고 하면 스크립트를 자동으로 생성하거나 수정합니다.
-
-### 4. 실행
+### 3. 실행
 
 ```bash
 # Claude Code 실행
@@ -141,7 +130,9 @@ claude
 > 4단계 레드 비평을 수행해줘
 ```
 
-### 5. 주의사항
+`output/generate_docx.py`와 `output/generate_images.py`는 직접 수정할 필요 없습니다. CLAUDE.md에 퍼블리싱 규칙이 정의되어 있으므로, 12단계에서 Claude Code가 자동으로 생성합니다.
+
+### 4. 주의사항
 
 - **분량 관리**: 12만~15만 자 분량은 한 번에 생성되지 않습니다. 부 단위로 나눠 작성하고 이어붙이는 방식을 씁니다
 - **컨텍스트 한계**: 대화가 길어지면 앞부분을 잊습니다. 새 대화를 시작하더라도 CLAUDE.md와 draft 파일을 읽으므로 이어서 작업할 수 있습니다
@@ -211,23 +202,11 @@ CLAUDE.md의 작성 규칙에서 언어와 문체를 바꾸면 됩니다. 에이
     └── images/                  # 다이어그램 (matplotlib으로 생성)
 ```
 
-## docx 생성기 주요 기능
-
-`generate_docx.py`가 지원하는 서식 기능:
-
-| 기능 | 설명 |
-|------|------|
-| 표 페이지 분할 방지 | 10행 이하 표는 `keepTogether`로 한 페이지 유지, 긴 표는 분할 허용 |
-| 이미지-캡션 동일 페이지 | `keepNext`로 이미지와 캡션이 항상 같은 페이지에 표시 |
-| 셀 내 줄바꿈+작은 글씨 | `<br><sm>텍스트</sm>` 태그로 줄바꿈 후 8pt 글씨 처리 |
-| 핵심 정리 박스 | 배경색 #E8F0FE, 테두리 #1F4E79, `keepTogether` 적용 |
-| 자동 이미지 삽입 | `[그림 N: 설명]` 패턴 감지 → `output/images/figNN.png` 삽입 |
-
 ## 기술 스택
 
 | 용도 | 기술 |
 |------|------|
-| 에이전트 실행 | [Claude Code](https://claude.com/claude-code) (Anthropic) |
+| 에이전트 실행 | [Claude Code](https://docs.anthropic.com/en/docs/claude-code) (Anthropic) |
 | 원고 형식 | Markdown |
 | 문서 생성 | python-docx |
 | 다이어그램 | matplotlib |

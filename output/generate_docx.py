@@ -10,7 +10,7 @@ from docx import Document
 from docx.shared import Pt, Cm, Inches, RGBColor, Emu
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.enum.table import WD_TABLE_ALIGNMENT
-from docx.enum.section import WD_ORIENT, WD_SECTION_START
+from docx.enum.section import WD_ORIENT
 from docx.oxml.ns import qn, nsdecls
 from docx.oxml import parse_xml
 import datetime
@@ -96,7 +96,7 @@ def add_full_width_shaded_paragraph(doc, font_name, color_hex, text="", size=11,
     return p
 
 
-def set_paragraph_spacing(paragraph, before=0, after=6, line_spacing=1.2):
+def set_paragraph_spacing(paragraph, before=0, after=12, line_spacing=1.2):
     """문단 간격 설정"""
     pf = paragraph.paragraph_format
     pf.space_before = Pt(before)
@@ -344,43 +344,49 @@ def process_inline_formatting(paragraph, text, font_name, size=11, color=COLOR_B
 
 
 def create_cover_page(doc, font_name):
-    """표지 페이지 생성 - 다크 틸 배경 (전체 페이지 채움)"""
-    bg = COLOR_COVER_BG
+    """표지 페이지 생성 - 배경색 없이 깔끔한 흰색"""
     center = WD_ALIGN_PARAGRAPH.CENTER
 
-    # 상단 여백 채우기
-    for _ in range(10):
-        add_full_width_shaded_paragraph(doc, font_name, bg, before=0, after=0)
+    # 상단 여백
+    for _ in range(7):
+        p = doc.add_paragraph()
+        set_paragraph_spacing(p, before=0, after=0)
 
     # 제목
-    add_full_width_shaded_paragraph(doc, font_name, bg,
-        text="노트북LM으로 다 됨", size=28, text_color=COLOR_WHITE,
-        bold=True, alignment=center, before=0, after=8)
+    p = doc.add_paragraph()
+    p.alignment = center
+    run = p.add_run("노트북LM으로 다 됨")
+    set_font_for_run(run, font_name, 28, bold=True, color=COLOR_DARK_BLUE)
+    set_paragraph_spacing(p, before=0, after=8)
 
     # 구분선
-    add_full_width_shaded_paragraph(doc, font_name, bg,
-        text="━━━━━━━━━━━━━━━", size=10, text_color=COLOR_COVER_ACCENT,
-        alignment=center, before=4, after=4)
+    p = doc.add_paragraph()
+    p.alignment = center
+    run = p.add_run("━━━━━━━━━━━━━━━")
+    set_font_for_run(run, font_name, 10, color=COLOR_MED_BLUE)
+    set_paragraph_spacing(p, before=4, after=4)
 
     # 부제
-    add_full_width_shaded_paragraph(doc, font_name, bg,
-        text="팀장을 위한 실전 활용법 20선", size=16, text_color=COLOR_COVER_ACCENT,
-        alignment=center, before=0, after=24)
+    p = doc.add_paragraph()
+    p.alignment = center
+    run = p.add_run("팀장을 위한 실전 활용법 20선")
+    set_font_for_run(run, font_name, 16, color=COLOR_MED_BLUE)
+    set_paragraph_spacing(p, before=0, after=24)
 
     # 저자
-    add_full_width_shaded_paragraph(doc, font_name, bg,
-        text="AI ROASTING", size=14, text_color=COLOR_WHITE,
-        alignment=center, before=0, after=12)
+    p = doc.add_paragraph()
+    p.alignment = center
+    run = p.add_run("AI ROASTING")
+    set_font_for_run(run, font_name, 14, color=COLOR_DARK_BLUE)
+    set_paragraph_spacing(p, before=0, after=12)
 
     # 작성일
     today = datetime.date.today().strftime("%Y년 %m월 %d일")
-    add_full_width_shaded_paragraph(doc, font_name, bg,
-        text=today, size=12, text_color=RGBColor(0x99, 0xBB, 0xB7),
-        alignment=center, before=0, after=0)
-
-    # 하단 여백 채우기
-    for _ in range(8):
-        add_full_width_shaded_paragraph(doc, font_name, bg, before=0, after=0)
+    p = doc.add_paragraph()
+    p.alignment = center
+    run = p.add_run(today)
+    set_font_for_run(run, font_name, 12, color=COLOR_GRAY)
+    set_paragraph_spacing(p, before=0, after=0)
 
     add_page_break(doc)
 
@@ -606,33 +612,31 @@ def process_markdown(doc, md_text, font_name):
             title_text = stripped.lstrip('#').strip()
 
             if level == 1:
-                # 부 제목 (# 제1부: ...) - 옅은 민트 배경 전체 페이지
-                bg = COLOR_PART_BG
+                # 부 제목 (# 제1부: ...) - 배경색 없이 깔끔하게
                 center = WD_ALIGN_PARAGRAPH.CENTER
 
-                # 페이지 브레이크 (이전 단락에 pageBreakBefore 설정)
-                first_p = add_full_width_shaded_paragraph(doc, font_name, bg, before=0, after=0)
-                first_p.paragraph_format.page_break_before = True
+                # 페이지 브레이크
+                add_page_break(doc)
 
                 # 상단 여백
                 for _ in range(7):
-                    add_full_width_shaded_paragraph(doc, font_name, bg, before=0, after=0)
+                    p = doc.add_paragraph()
+                    set_paragraph_spacing(p, before=0, after=0)
 
-                # 부 제목 (Heading 1 스타일 유지하되 배경 확장)
+                # 부 제목 (Heading 1)
                 p = doc.add_paragraph()
                 p.style = doc.styles['Heading 1']
                 p.clear()
                 p.alignment = center
                 process_inline_formatting(p, title_text, font_name, 22, COLOR_DARK_BLUE, True)
                 set_paragraph_spacing(p, before=0, after=8)
-                set_paragraph_shading(p, bg)
-                set_paragraph_negative_indent(p, 2.5, 2.5)
 
                 # 구분선
-                add_full_width_shaded_paragraph(doc, font_name, bg,
-                    text="━━━━━━━━━━", size=10,
-                    text_color=RGBColor(0x1A, 0x3C, 0x40),
-                    alignment=center, before=4, after=4)
+                p = doc.add_paragraph()
+                p.alignment = center
+                run = p.add_run("━━━━━━━━━━")
+                set_font_for_run(run, font_name, 10, color=COLOR_MED_BLUE)
+                set_paragraph_spacing(p, before=4, after=4)
 
                 # 부 제목 다음에 부제가 있으면 같은 페이지에 렌더링
                 next_idx = i + 1
@@ -642,21 +646,15 @@ def process_markdown(doc, md_text, font_name):
                     subtitle_line = lines[next_idx].strip()
                     if subtitle_line.startswith('**') and subtitle_line.endswith('**'):
                         subtitle_text = subtitle_line.strip('*').strip()
-                        add_full_width_shaded_paragraph(doc, font_name, bg,
-                            text=subtitle_text, size=14,
-                            text_color=RGBColor(0x1A, 0x3C, 0x40),
-                            alignment=center, before=8, after=0)
-
-                        # 하단 채우기
-                        for _ in range(14):
-                            add_full_width_shaded_paragraph(doc, font_name, bg, before=0, after=0)
+                        p = doc.add_paragraph()
+                        p.alignment = center
+                        run = p.add_run(subtitle_text)
+                        set_font_for_run(run, font_name, 14, color=COLOR_MED_BLUE)
+                        set_paragraph_spacing(p, before=8, after=0)
 
                         i = next_idx + 1
                         continue
 
-                # 부제가 없는 경우 하단 채우기
-                for _ in range(14):
-                    add_full_width_shaded_paragraph(doc, font_name, bg, before=0, after=0)
                 i += 1
                 continue
 

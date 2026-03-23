@@ -41,7 +41,7 @@
 |------|------|-----------|------------|
 | 1 | `/research` | 웹 검색 조사 | `draft/01_research-notes.md` |
 | 2 | `/write` | 구조 설계 → 초안 작성 | `draft/02_outline.md`, `draft/03_draft-v1.md` |
-| 3 | `/review` | 내부 리뷰(비평, 독자, 합평) → 외부 리뷰(편집자, 마케터, 프루프리더) → 최종 수정 | `draft/04_review-red.md` ~ `draft/11_draft-final.md` |
+| 3 | `/review` | 내부 리뷰(비평, 독자, 합평) → 외부 리뷰(편집자, 마케터, 프루프리더) → 최종 수정 | `draft/04_review-red.md` ~ `draft/14_review-proofreader.md` |
 | 4 | `/publish` | Word 변환 → 메타데이터 생성 | `output/final.docx`, `output/metadata.md` |
 
 ### 독립 스킬 (언제든 실행)
@@ -67,9 +67,9 @@ draft/ 폴더의 모든 파일은 생성 순서대로 번호가 붙는다.
 | 09 | `09_draft-v4.md` | `/review` |
 | 10 | `10_ensemble-review-2.md` | `/review` |
 | 11 | `11_draft-final.md` | `/review` |
-| 12 | `12_review-editor.md` | `/publish` |
-| 13 | `13_review-marketer.md` | `/publish` |
-| 14 | `14_review-proofreader.md` | `/publish` |
+| 12 | `12_review-editor.md` | `/review` |
+| 13 | `13_review-marketer.md` | `/review` |
+| 14 | `14_review-proofreader.md` | `/review` |
 
 ## 품질 기준
 

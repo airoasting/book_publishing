@@ -5,7 +5,7 @@
 
 ## 이 프로젝트가 하는 일
 
-슬래시 커맨드 4개를 순서대로 실행하면 책이 완성됩니다.
+핵심 커맨드 4개를 순서대로 실행하면 책이 완성됩니다. `/cover`는 언제든 독립 실행합니다.
 
 ```
 /research   →  웹 검색으로 최신 정보 수집
@@ -21,9 +21,11 @@
 
 | 항목 | 내용 |
 |------|------|
-| 분량 | 176,000자, B5 판형 약 240페이지 |
+| 분량 | 176,000자 (목표 12만~15만자 초과 달성), B5 판형 약 240페이지 |
 | 구성 | 프롤로그 + 7부(20개 활용법) + 에필로그 + 부록 4개 + 참고문헌 |
-| 산출물 | Word 문서(.docx), PDF, 다이어그램 40개, 출판 메타데이터 |
+| 산출물 | Word 문서(.docx), 다이어그램 약 40개, 출판 메타데이터 |
+
+Word 문서를 최종 검토 후 PDF로 변환하여 사용합니다.
 
 ## 다른 책에 재사용하기
 
@@ -78,7 +80,7 @@ npm install -g @anthropic-ai/claude-code
 ```bash
 claude
 
-# 4개 커맨드를 순서대로 실행
+# 핵심 커맨드를 순서대로 실행
 > /research
 > /write
 > /review
@@ -98,15 +100,15 @@ claude
 ## 스킬 구조
 
 ```
-CLAUDE.md (82줄)                ← 프로세스 + 범용 규칙 (수정 불필요)
+CLAUDE.md                       ← 프로세스 + 범용 규칙 (수정 불필요)
 .claude/
-├── book-toc.md (273줄)         ← ★ 유일한 교체 대상
+├── book-toc.md                 ← ★ 유일한 교체 대상
 └── skills/
-    ├── research.md (28줄)      /research   웹 검색 조사
-    ├── write.md (38줄)         /write      구조 설계 + 초안
-    ├── review.md (200줄)       /review     내부+외부 리뷰 전체
-    ├── publish.md (44줄)       /publish    Word 변환 + 메타데이터
-    └── cover.md (58줄)         /cover      표지 디자인 (독립)
+    ├── research.md             /research   웹 검색 조사
+    ├── write.md                /write      구조 설계 + 초안
+    ├── review.md               /review     내부+외부 리뷰 전체
+    ├── publish.md              /publish    Word 변환 + 메타데이터
+    └── cover.md                /cover      표지 디자인 (독립)
 ```
 
 ## 산출물 번호 체계

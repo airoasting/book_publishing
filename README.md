@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Version-2.0.0-brightgreen" alt="Version 2.0.0">
+  <img src="https://img.shields.io/badge/Version-2.0-brightgreen" alt="Version 2.0">
   <img src="https://img.shields.io/badge/License-Apache%202.0-blue" alt="License Apache 2.0">
   <img src="https://img.shields.io/badge/Works%20with-Claude%20%C2%B7%20ChatGPT-blueviolet" alt="Works with Claude and ChatGPT">
   <img src="https://img.shields.io/badge/Reviewers-9%20Personas-orange" alt="Reviewers 9 Personas">
@@ -33,13 +33,14 @@ Book Writer는 Claude와 ChatGPT에서 쓸 수 있는 책쓰기 스킬입니다.
 
 ### 2. 설치
 
-이 폴더 전체를 Claude Code의 스킬 폴더에 복사합니다. 터미널에 아래 한 줄을 붙여 넣으면 됩니다.
+Claude Code를 열고 아래 주소를 붙여 넣으면서 이렇게 말하면 끝입니다.
 
 ```
-cp -R "이 폴더 경로" ~/.claude/skills/book-writer
+https://github.com/airoasting/book_publishing
+이 주소의 스킬을 다운로드해서 내 스킬 폴더에 설치해줘
 ```
 
-또는 Finder에서 이 폴더를 복사한 뒤, `홈 > .claude > skills` 폴더 안에 `book-writer`라는 이름으로 붙여 넣어도 같습니다.
+Claude가 알아서 내려받아 `홈 > .claude > skills > book-writer`에 설치해 줍니다. 직접 하고 싶다면 위 주소에서 초록색 Code 버튼 > Download ZIP으로 내려받아, 압축 푼 폴더를 그 위치에 넣어도 같습니다.
 
 ### 3. 책 정보 채우기
 
@@ -82,11 +83,14 @@ Claude Code를 열고 이렇게 말합니다.
 
 ## ChatGPT에서도 쓸 수 있습니다
 
-위 설치 과정은 Claude Code 기준이고, ChatGPT에서는 이렇게 쓰면 됩니다.
+1. 아래 주소에서 초록색 Code 버튼 > Download ZIP을 눌러 내려받고 압축을 풉니다.
 
-1. ChatGPT에서 새 프로젝트(또는 GPT 만들기)를 열고, 지시문에 `SKILL.md` 내용을 붙여 넣습니다.
-2. `references/` 폴더의 문서 4개와 `scripts/verify.py`, 그리고 내 책 정보를 채운 `user-book-toc.md`를 파일로 업로드합니다.
-3. "책 써줘"라고 말하면 같은 4단계 워크플로우로 진행됩니다.
+   ```
+   https://github.com/airoasting/book_publishing
+   ```
+
+2. ChatGPT에서 새 프로젝트(또는 GPT 만들기)를 열고, 지시문에 `SKILL.md` 내용을 붙여 넣습니다.
+3. `references/` 폴더의 문서 4개와 `scripts/verify.py`, 그리고 내 책 정보를 채운 `user-book-toc.md`를 파일로 업로드한 뒤 "책 써줘"라고 말합니다.
 
 자동 검사와 Word 변환은 파이썬 코드를 실행할 수 있는 환경이 필요합니다. Claude Code에서는 기본으로 동작하고, ChatGPT에서는 데이터 분석(코드 실행) 기능이 켜져 있어야 합니다.
 
@@ -132,13 +136,13 @@ book-writer/
 
 ## 버전 히스토리
 
-| 버전 | 날짜 | 주요 변화 |
-|------|------|-----------|
-| 2.0.0 | 2026-07-10 | 표준 스킬 폴더로 전환 (폴더 복사만으로 설치). SKILL.md 도입, 단계 문서를 `references/`로 정리, 내 책 정보 파일을 `book/` 폴더로 분리. 썸네일·배지 추가, 리드미를 비개발자용으로 재작성 |
-| 1.3.0 | 2026-07-10 | 스킬이 실제로 등록되지 않던 형식 문제 수정. 초안 설정 저장 버그와 리뷰 이어하기 판정 문제 수정 |
-| 1.2.0 | 2026-05-04 | 책 정보 파일 이름을 `user-book-toc.md`로 변경하고 눈에 잘 띄는 위치로 이동 |
-| 1.1.0 | 2026-05-04 | 초안 작성 단위(부 단위/끝까지)를 처음에 한 번만 묻고 기억하도록 개선. 표지 기능은 외부 도구에 위임 |
-| 1.0.0 | 2026-05-04 | 첫 정식 버전. 날짜별 작업 폴더, 완료 도장(상태 마커), 자동 검사기(verify.py), 9인 리뷰 채점 기준 도입 |
+| 버전 | 날짜 | 무엇이 달라졌나 |
+|------|------|-----------------|
+| 2.0 | 2026-07-11 | **설치가 쉬워졌습니다.** 이전에는 여러 폴더를 만져야 했지만, 이제 폴더 하나를 복사하면 설치가 끝납니다. 내가 채우는 책 정보 파일은 `book` 폴더에 따로 모아서 헷갈리지 않게 했고, 이 안내서도 처음 쓰는 분 기준으로 다시 썼습니다 |
+| 1.3 | 2026-07-10 | **말을 안 듣던 문제를 고쳤습니다.** "책 써줘"라고 해도 스킬이 반응하지 않던 문제, 초안을 얼마나 쓸지 물어봐 놓고 답을 무시하던 문제, 중간에 끊긴 뒤 이어하기가 엉뚱한 지점에서 시작되던 문제를 수정했습니다 |
+| 1.2 | 2026-05-04 | **책 정보 파일을 찾기 쉽게 했습니다.** 숨겨진 폴더에 있던 파일을 잘 보이는 곳으로 옮기고, "사용자가 채우는 파일"이라는 뜻이 드러나게 이름을 `user-book-toc.md`로 바꿨습니다 |
+| 1.1 | 2026-05-04 | **같은 질문을 반복하지 않게 했습니다.** 초안을 한 번에 얼마나 쓸지(한 부씩 또는 끝까지) 처음에 한 번만 묻고 그 답을 기억합니다. 표지 만들기는 결과가 아쉬워서 뺐습니다. 표지는 디자이너나 전문 도구에 맡기세요 |
+| 1.0 | 2026-05-04 | **첫 정식 버전.** 책마다 날짜 폴더로 정리되고, 중간에 끊겨도 이어 쓸 수 있는 완료 도장이 생겼습니다. 원고 자동 검사와 9명의 평가자 리뷰 기준도 이때 갖췄습니다 |
 
 ## 라이선스
 

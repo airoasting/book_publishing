@@ -1,9 +1,9 @@
 ---
-name: book-writer
+name: book_publishing
 description: "AI 에이전트 팀이 한국어 책 한 권을 리서치부터 Word 문서(.docx)까지 끝까지 쓰는 스킬. 사용자가 '책 써줘', '책쓰기 시작', '리서치 시작해줘', '초안 써줘', '원고 리뷰해줘', '출판해줘', '/research', '/write', '/review', '/publish'라고 하거나 book/user-book-toc.md 기반의 책 작업(집필·리뷰·docx 변환)을 요청하면 반드시 이 스킬을 쓴다. 리서치, 구조 설계와 초안, 9인 리뷰 사이클, 자동 검증과 Word 변환의 4단계를 상태 마커로 이어가며 진행한다."
 ---
 
-# AI 책쓰기 스킬 (book-writer)
+# AI 책쓰기 스킬 (book_publishing)
 
 ## 프로젝트 구조
 

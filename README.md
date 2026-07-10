@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/thumbnail.svg" alt="Book Writer: AI 에이전트 팀이 책 한 권을 처음부터 끝까지 씁니다" width="100%">
+  <img src="assets/thumbnail.svg" alt="Book_Publishing: AI 에이전트 팀이 책 한 권을 처음부터 끝까지 씁니다" width="100%">
 </p>
 
 <p align="center">
@@ -10,11 +10,11 @@
   <img src="https://img.shields.io/badge/Language-%ED%95%9C%EA%B5%AD%EC%96%B4-blueviolet" alt="Language 한국어">
 </p>
 
-# Book Writer
+# Book_Publishing
 
 **책의 제목과 목차만 정해 주세요. 나머지는 AI가 합니다.**
 
-Book Writer는 Claude와 ChatGPT에서 쓸 수 있는 책쓰기 스킬입니다. 자료 조사부터 초안 작성, 9명의 평가자 검수, 최종 Word 문서(.docx) 변환까지 책 한 권이 만들어지는 전 과정을 자동으로 진행합니다.
+Book_Publishing은 Claude와 ChatGPT에서 쓸 수 있는 책쓰기 스킬입니다. 자료 조사부터 초안 작성, 9명의 평가자 검수, 최종 Word 문서(.docx) 변환까지 책 한 권이 만들어지는 전 과정을 자동으로 진행합니다.
 
 ## 이런 분께 맞습니다
 
@@ -40,7 +40,7 @@ https://github.com/airoasting/book_publishing
 이 주소의 스킬을 다운로드해서 내 스킬 폴더에 설치해줘
 ```
 
-Claude가 알아서 내려받아 `홈 > .claude > skills > book-writer`에 설치해 줍니다. 직접 하고 싶다면 위 주소에서 초록색 Code 버튼 > Download ZIP으로 내려받아, 압축 푼 폴더를 그 위치에 넣어도 같습니다.
+Claude가 알아서 내려받아 `홈 > .claude > skills > book_publishing`에 설치해 줍니다. 직접 하고 싶다면 위 주소에서 초록색 Code 버튼 > Download ZIP으로 내려받아, 압축 푼 폴더를 그 위치에 넣어도 같습니다.
 
 ### 3. 책 정보 채우기
 
@@ -109,7 +109,7 @@ Claude Code를 열고 이렇게 말합니다.
 ## 폴더 구성
 
 ```
-book-writer/
+book_publishing/
 ├── SKILL.md              스킬의 작동 규칙 (수정하지 않음)
 ├── book/
 │   └── user-book-toc.md  ★ 내 책 정보 (유일하게 편집하는 파일)

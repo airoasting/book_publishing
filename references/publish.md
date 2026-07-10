@@ -1,17 +1,12 @@
----
-name: publish
-description: "리뷰 완료된 최종 원고를 검증·Word 변환·메타데이터 생성한다. /review 다음에 실행. Use after /review completes — runs an automated verifier first to catch style violations and placeholder leaks, then produces final.docx and metadata.md in output/{ACTIVE}/."
-allowed-tools: Read, Write, Edit, Bash
-user_invocable: true
----
-
 # 퍼블리싱 + 검증 + 메타데이터
+
+> 책쓰기 워크플로우 4단계. SKILL.md의 지시로 로드되는 실행 문서다.
 
 이 스킬은 3단계를 순서대로 수행한다. 검증을 통과해야 Word 변환으로 넘어간다.
 
 ## 시작 전 준비
 
-`user-book-toc.md`를 읽고 다음을 파악한다:
+`book/user-book-toc.md`를 읽고 다음을 파악한다:
 - 기본 정보: 제목, 필명, 판형
 - 목차: 부 제목, 부 부제, 장 제목 (헤딩 구조에 사용)
 - 퍼블리싱 사양: 폰트, 색상, 여백, 문서 구성 요소, 시각 자료, 이미지 생성 규칙
@@ -38,12 +33,7 @@ echo "출판 출력 폴더: ${OUT}"
 
 ### 1.1 검증 스크립트 준비
 
-이 하네스의 표준 검증기는 `tests/verify.py`다. `/publish`는 이 파일을 그대로 사용한다 (단일 진실 원칙: 책마다 verifier가 따로 생기지 않는다).
-
-```bash
-# verify.py가 정상 작동하는지 사전 체크 (옵션)
-bash tests/run-smoke.sh
-```
+이 하네스의 표준 검증기는 **스킬 폴더의** `scripts/verify.py`다. `/publish`는 이 파일을 그대로 사용한다 (단일 진실 원칙: 책마다 verifier가 따로 생기지 않는다). 스킬이 `~/.claude/skills/book-writer`에 설치되어 있고 작업 폴더가 다른 곳이면, 스킬 베이스 디렉토리 기준 경로로 실행한다.
 
 검증기가 검사하는 항목 (자가 채점 anchor와 함께):
 
@@ -53,8 +43,8 @@ bash tests/run-smoke.sh
 | 2 | `**` 마크다운 잔존 | 🔴 |
 | 3 | [그림 N] 참조 수 (정보) | ℹ️ |
 | 4 | 합쇼체 혼용 비율 (>5%) | 🟡 |
-| 5 | 분량 vs user-book-toc.md 목표 (미달이면 🔴) | 🔴 / ℹ️ |
-| 6 | user-book-toc.md 목차 헤딩 누락 | 🔴 |
+| 5 | 분량 vs book/user-book-toc.md 목표 (미달이면 🔴) | 🔴 / ℹ️ |
+| 6 | book/user-book-toc.md 목차 헤딩 누락 | 🔴 |
 | 7 | `<!-- STAGE_COMPLETE: 11_draft-final -->` 마커 | 🔴 |
 | 8 | "N부를 마치며" 브릿지 누락 | 🟡 |
 | 9 | 용어 위반 ("커스텀 지시" 등 book-toc 위반) | 🔴 |
@@ -62,14 +52,14 @@ bash tests/run-smoke.sh
 | 11 | 영어 단독 표현 ("Before/After" 등) | 🟡 |
 | 12 | 자가 채점 (10점 만점) | 정보 |
 
-자가 채점은 CLAUDE.md "자가 채점" 표 anchor를 그대로 따른다.
+자가 채점은 SKILL.md "자가 채점" 표 anchor를 그대로 따른다.
 
 ### 1.2 검증 실행
 
 ```bash
-python3 tests/verify.py \
+python3 scripts/verify.py \
   "${ACTIVE}/11_draft-final.md" \
-  "user-book-toc.md" \
+  "book/user-book-toc.md" \
   "${OUT}/verify-report.md"
 ```
 
@@ -90,7 +80,7 @@ verify 통과: 자가 채점 9 / 10 (🔴 0, 🟡 1)
 
 ### 1.4 백업
 
-검증 통과 시점의 `{ACTIVE}/11_draft-final.md`를 `{ACTIVE}/_backup/11_draft-final_published_$(date +%Y%m%d_%H%M).md`로 복사한다 (CLAUDE.md "백업 정책"의 세 번째 트리거).
+검증 통과 시점의 `{ACTIVE}/11_draft-final.md`를 `{ACTIVE}/_backup/11_draft-final_published_$(date +%Y%m%d_%H%M).md`로 복사한다 (SKILL.md "백업 정책"의 세 번째 트리거).
 
 ---
 
@@ -98,7 +88,7 @@ verify 통과: 자가 채점 9 / 10 (🔴 0, 🟡 1)
 
 입력: `{ACTIVE}/11_draft-final.md`
 
-`user-book-toc.md`의 "퍼블리싱 사양" 섹션에 정의된 모든 서식 규칙을 적용하여 Word 문서를 생성한다.
+`book/user-book-toc.md`의 "퍼블리싱 사양" 섹션에 정의된 모든 서식 규칙을 적용하여 Word 문서를 생성한다.
 
 생성 스크립트:
 - `{OUT}/generate_images.py` — matplotlib으로 [그림 N] 위치에 들어갈 이미지 생성. `{OUT}/images/fig01.png`부터 순번 저장
@@ -106,7 +96,7 @@ verify 통과: 자가 채점 9 / 10 (🔴 0, 🟡 1)
 
 산출물:
 - `{OUT}/final.docx`
-- 문서 작성자(author) 속성은 `user-book-toc.md`의 필명으로 설정
+- 문서 작성자(author) 속성은 `book/user-book-toc.md`의 필명으로 설정
 
 ## 3단계: 출판 메타데이터 생성
 

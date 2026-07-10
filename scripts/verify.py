@@ -1,6 +1,6 @@
-"""book-writing harness verifier — standalone copy used by /publish 1단계.
-This file lives in tests/ as the canonical verifier so smoke tests can run it.
-/publish copies (or references) this file when generating verify-report.md.
+"""book-writing harness verifier, standalone copy used by /publish 1단계.
+This file lives in scripts/ as the canonical verifier.
+/publish runs this file when generating verify-report.md.
 """
 import re, sys, pathlib
 

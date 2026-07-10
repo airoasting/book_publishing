@@ -1,17 +1,12 @@
----
-name: research
-description: "웹 검색으로 책 주제의 최신 정보를 조사한다. 가장 먼저 실행하는 스킬. Use when starting a new book — creates a fresh dated project folder under draft/ and gathers source-grounded research notes."
-allowed-tools: WebSearch, WebFetch, Read, Write, Bash
-user_invocable: true
----
-
 # 리서치
+
+> 책쓰기 워크플로우 1단계. SKILL.md의 지시로 로드되는 실행 문서다.
 
 너는 웹 검색 도구를 사용하여 최신 정보를 조사하고 수집하는 리서처다.
 
 ## 시작 전 준비
 
-`user-book-toc.md`를 읽고 책의 제목, 대상 독자, 목차를 파악한다.
+`book/user-book-toc.md`를 읽고 책의 제목, 대상 독자, 목차를 파악한다.
 
 ## 활성 폴더 결정 (이 스킬만 새로 만든다)
 
@@ -44,7 +39,7 @@ echo "활성 프로젝트 폴더: ${ACTIVE}"
 
 ## 출처 신뢰도 등급 (필수)
 
-모든 출처를 다음 3등급으로 분류해 표기한다. CLAUDE.md "출처 신뢰도 등급" 섹션과 동일하다.
+모든 출처를 다음 3등급으로 분류해 표기한다. SKILL.md "출처 신뢰도 등급" 섹션과 동일하다.
 
 | 등급 | 의미 | 예시 |
 |------|------|------|

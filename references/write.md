@@ -1,17 +1,12 @@
----
-name: write
-description: "리서치 결과를 바탕으로 구조를 설계하고 초안을 작성한다. /research 다음에 실행. Use after /research completes — reads 01_research-notes.md and produces 02_outline.md and 03_draft-v1.md. On the first call it asks the user once how to chunk the work (per-Part / two-Parts / all-at-once) and persists that choice."
-allowed-tools: Read, Write, Edit, Bash, AskUserQuestion
-user_invocable: true
----
-
 # 구조 설계 + 초안 작성
+
+> 책쓰기 워크플로우 2단계. SKILL.md의 지시로 로드되는 실행 문서다.
 
 이 스킬은 2단계를 순서대로 수행한다.
 
 ## 시작 전 준비
 
-`user-book-toc.md`를 읽고 다음을 파악한다:
+`book/user-book-toc.md`를 읽고 다음을 파악한다:
 - 기본 정보: 제목, 필명, 독자 지칭, 기준 연도
 - 페르소나: 캐릭터와 말투를 숙지하고 그 목소리로 글을 쓴다
 - 목차: 각 장/활용법의 구조
@@ -57,13 +52,13 @@ echo "활성 프로젝트 폴더: ${ACTIVE}"
 - 2번 → `chunk_unit: "two_parts"`, `auto_continue: false`
 - 3번 → `chunk_unit: "part"`,    `auto_continue: true` (Part별 파일은 그대로 만들되 멈추지 않고 끝까지 작성)
 
-설정을 저장한다:
+**사용자가 실제로 고른 답을 위 매핑대로 채워** 저장한다. 아래는 형식 예시일 뿐이므로 값을 그대로 복사하지 않는다 (예: 2번을 골랐으면 `chunk_unit`은 `"two_parts"`, 3번이면 `auto_continue`는 `true`).
 
 ```bash
 cat > "${ACTIVE}/_session-config.json" <<JSON
 {
-  "chunk_unit": "part",
-  "auto_continue": false,
+  "chunk_unit": "<선택된 값: part | two_parts>",
+  "auto_continue": <선택된 값: true | false>,
   "decided_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
   "decided_by": "user"
 }
@@ -93,7 +88,7 @@ JSON
 
 `{ACTIVE}/01_research-notes.md`를 읽고 문서의 전체 구조를 설계한다.
 
-- `user-book-toc.md`의 목차를 기반으로 각 장의 세부 구조를 설계한다
+- `book/user-book-toc.md`의 목차를 기반으로 각 장의 세부 구조를 설계한다
 - 리서치 결과에서 각 장에 배치할 핵심 내용을 매핑한다
 - 각 부의 분량 배분을 설계한다 (목표 분량 기준)
 - 장 간 연결 흐름(브릿지)을 설계한다
@@ -143,7 +138,7 @@ Part N 작성 완료. /write로 다음 Part를 작성하세요.
 
 ### 작성 원칙
 
-- CLAUDE.md의 작성 규칙과 `user-book-toc.md`의 작성 스타일을 모두 준수한다
+- SKILL.md의 작성 규칙과 `book/user-book-toc.md`의 작성 스타일을 모두 준수한다
 - 페르소나(말투, 어미, 어휘)를 처음부터 끝까지 일관되게 유지한다
 - em dash(—, –)는 절대 쓰지 않는다
 - 어미는 해라체로 통일한다 (인용·프롬프트 예시 제외)
